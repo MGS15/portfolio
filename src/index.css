@@ -9,6 +9,7 @@ body {
 	box-sizing: border-box;
 	min-width: 320px;
 	min-height: 100vh;
+	height: 100vh;
 }
 
 #root {
@@ -19,5 +20,6 @@ body {
 	display: flex;
 	min-width: 320px;
 	min-height: 100vh;
+	height: 100vh;
 }
   
