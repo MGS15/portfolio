@@ -11,7 +11,7 @@ body {
 	width: 100vw;
 	min-height: 100vh;
 	height: 100vh;
-	cursor: url('assets/cursor-2.png'), auto;
+	cursor: url('assets/cursor.png'), auto;
 }
 
 #root {
@@ -24,6 +24,34 @@ body {
 	min-width: 320px;
 	min-height: 100vh;
 	height: 100vh;
-	cursor: url('assets/cursor-2.png'), auto;
+	cursor: url('assets/cursor.png'), auto;
 }
-  
+
+#desktop {
+	background-color:#323133;
+	&:after {
+		content: '';
+		position: absolute;
+		top:0px;
+		left:0px;
+		right:0px;
+		bottom:0px;
+		z-index:0;
+		background: repeating-linear-gradient(0deg, #111 0px, #111 1px, transparent 2px, transparent 5px);
+		background-size:100% 5px;
+		animation: lines 1200ms ease-out infinite;
+		opacity:0.3;
+		mix-blend-mode: color-burn;
+		pointer-events: none;
+	}
+}
+ 
+
+@keyframes lines {
+	0% {
+		background-position:0px 0px;
+	}
+	100% {
+		background-position:0px 25px;
+	}
+}

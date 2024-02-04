@@ -7,16 +7,19 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				'primary': '#485B63',
-				'secondary': '#C9C7AF',
-				'accent': '#F2CC8F',
-				'background': '#E3E1C9',
-				'text': '#000000',
+				'primary': '#0B142B',
+				'secondary': '#2E70C8',
+				'accent': '#CB70AF',
+				'background': '#0B142B',
+				'text': '#D9CBDA',
 			},
 			fontFamily: {
 				'poiret-one': ['Poiret One', 'sans-serif'],
 				'pixelify-sans': ['Pixelify Sans', 'sans-serif'],
 				'press-start': ['"Press Start 2P"', 'cursive']
+			},
+			backgroundImage: {
+				'wallpaper': "url('src/assets/background.jpeg')"
 			}
 		},
 	},
