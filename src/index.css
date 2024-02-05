@@ -37,9 +37,9 @@ body {
 		right:0px;
 		bottom:0px;
 		z-index:0;
-		background: repeating-linear-gradient(0deg, #111 0px, #111 1px, transparent 2px, transparent 5px);
+		background: repeating-linear-gradient(0deg, #111 0px, #111 1px, transparent 1px, transparent 5px);
 		background-size:100% 5px;
-		animation: lines 1200ms ease-out infinite;
+		animation: lines 2000ms ease-out infinite;
 		opacity:0.3;
 		mix-blend-mode: color-burn;
 		pointer-events: none;
