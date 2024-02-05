@@ -1,7 +1,13 @@
+import Desktop from "./Desktop";
+import Dock from "./Dock";
+import Header from "./Header";
+
 const MainComponent = () => {
 	return (
-		<div className={`flex p-2 sm:p-5 w-full h-full bg-amber-950`}>
-			<h1>Main Component</h1>
+		<div className={`flex flex-col w-full h-full`}>
+			<Header />
+			<Desktop />
+			<Dock />
 		</div>
 	);
 }
