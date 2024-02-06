@@ -12,22 +12,6 @@ body {
 	min-height: 100vh;
 	height: 100vh;
 	cursor: url('assets/cursor.png'), auto;
-}
-
-#root {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	box-sizing: border-box;
-	display: flex;
-	width: 100vw;
-	min-width: 320px;
-	min-height: 100vh;
-	height: 100vh;
-	cursor: url('assets/cursor.png'), auto;
-}
-
-#desktop {
 	background-color:#323133;
 	&:after {
 		content: '';
@@ -45,7 +29,23 @@ body {
 		pointer-events: none;
 	}
 }
- 
+
+#root {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-sizing: border-box;
+	display: flex;
+	width: 100vw;
+	min-width: 320px;
+	min-height: 100vh;
+	height: 100vh;
+	cursor: url('assets/cursor.png'), auto;
+}
+
+button {
+	cursor: url('assets/cursor.png'), auto;
+}
 
 @keyframes lines {
 	0% {

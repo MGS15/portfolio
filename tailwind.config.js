@@ -25,6 +25,8 @@ export default {
 			boxShadow: {
 				'bottomShadow': 'inset 0 -3px 5px 0px rgba(0, 0, 0, 0.9)',
 				'topShadow': 'inset 0 3px 5px 0px rgba(0, 0, 0, 0.9)',
+				'allShadow': 'inset 0 0px 2px 2px rgba(0, 0, 0, 0.7)',
+				'activeAllShadow': 'inset 0 0 3px 3px rgba(97, 126, 175, 0.3)',
 			}
 		},
 	},
