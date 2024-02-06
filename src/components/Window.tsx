@@ -19,7 +19,6 @@ const Window = ({window_props}: {window_props: IWindow}) => {
 
 	const [isMaximized, setIsMaximized] = useState(false)
 	const [position, setPosition] = useState(setDefaultPosition());
-	let defaultPosition = setDefaultPosition()
 
 	useEffect(() => {
 		if (isMaximized) {
@@ -35,7 +34,7 @@ const Window = ({window_props}: {window_props: IWindow}) => {
 
 	return (
 		<Draggable bounds="#desktop" handle=".drag-handle"
-			defaultPosition={defaultPosition} position={isMaximized ? position: undefined} >
+			defaultPosition={setDefaultPosition()} position={isMaximized ? position: undefined} >
 			<div className={`absolute select-none min-h-44 min-w-44
 				${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				 border-2 border-solid border-black bg-text`}>
@@ -50,8 +49,8 @@ const Window = ({window_props}: {window_props: IWindow}) => {
 							<p className={`capitalize font-pixelify-sans`}>{window_props.title}</p>
 						</div>
 						<div className={`flex flex-row justify-end gap-1`}>
-							<GenericButton text={`-`} isPrimary={false} functionallity={testfunc} params={null} />
-							<GenericButton text={`□`} isPrimary={false} functionallity={setIsMaximized} params={!isMaximized} />
+							<GenericButton text={`⎼`} isPrimary={false} functionallity={testfunc} params={null} />
+							<GenericButton text={`⚿`} isPrimary={false} functionallity={setIsMaximized} params={!isMaximized} />
 							<GenericButton text={`X`} isPrimary={false} functionallity={testfunc} params={null} />
 						</div>
 					</div>
