@@ -4,6 +4,8 @@ import mail from "../assets/mail.png"
 import toolbox from "../assets/toolbox.png"
 import pdf from "../assets/pdf.png"
 import who from "../assets/who.png"
+import IWindow from "../types/window";
+import Window from "./Window"
 
 const File = ({name, icon, isActive, onFileClick}: {name: string, icon: string, isActive: boolean, onFileClick: Function}) => {
 
@@ -32,6 +34,11 @@ const File = ({name, icon, isActive, onFileClick}: {name: string, icon: string, 
 
 const Desktop = () => {
 	const [activeFile, setActiveFile] = useState("");
+	const window_props: IWindow = {
+		title: 'test',
+		icon: pdf,
+		isActive: true
+	}
 
 	useEffect(() => {
 		const handleClickOutside = () => {
@@ -46,8 +53,9 @@ const Desktop = () => {
 	}
   
 	return (
-		<div id="desktop" className={`bg-wallpaper bg-center bg-cover bg-no-repeat
-		flex flex-col flex-1 gap-5 px-4 py-6`}>
+		<div id="desktop" className={`bg-wallpaper relative bg-center bg-cover bg-no-repeat
+			flex flex-col flex-1 gap-5 overflow-hidden`}>
+			<Window window_props={window_props}  />
 			<File 
 				name={"Who am I?"} 
 				icon={who} 
