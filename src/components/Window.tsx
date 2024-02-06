@@ -37,7 +37,7 @@ const Window = ({window_props}: {window_props: IWindow}) => {
 		<Draggable bounds="#desktop" handle=".drag-handle"
 			defaultPosition={defaultPosition} position={isMaximized ? position: undefined} >
 			<div className={`absolute select-none min-h-44 min-w-44
-				${isMaximized ? "w-full h-full top-0 left-0" : "w-fit h-fit"}
+				${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				 border-2 border-solid border-black bg-text`}>
 				<div className={`flex flex-col min-h-44 min-w-44  ${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				${window_props.isActive ? "border-2 border-t-white border-l-white border-r-black border-b-black" :
