@@ -18,6 +18,7 @@ const setDefaultPosition = () => {
 const Window = ({window_props}: {window_props: IWindow}) => {
 
 	const [isMaximized, setIsMaximized] = useState(false)
+	const [isClosed, setIsClosed] = useState(false)
 	const [position, setPosition] = useState(setDefaultPosition());
 
 	useEffect(() => {
@@ -26,7 +27,7 @@ const Window = ({window_props}: {window_props: IWindow}) => {
 		} else {
 			setPosition(setDefaultPosition())
 		}
-	}, [isMaximized])
+	}, [isMaximized, isClosed])
 
 	const testfunc = () => {
 		console.log('test')
@@ -49,9 +50,9 @@ const Window = ({window_props}: {window_props: IWindow}) => {
 							<p className={`capitalize font-pixelify-sans`}>{window_props.title}</p>
 						</div>
 						<div className={`flex flex-row justify-end gap-1`}>
-							<GenericButton text={`⎼`} isPrimary={false} functionallity={testfunc} params={null} />
-							<GenericButton text={`⚿`} isPrimary={false} functionallity={setIsMaximized} params={!isMaximized} />
-							<GenericButton text={`X`} isPrimary={false} functionallity={testfunc} params={null} />
+							<GenericButton text={`⎼`} isPrimary={false} functionallity={testfunc} />
+							<GenericButton text={`⚿`} isPrimary={false} functionallity={() => setIsMaximized(!isMaximized)} />
+							<GenericButton text={`X`} isPrimary={false} functionallity={() => setIsClosed(!isClosed)} />
 						</div>
 					</div>
 					<div className={`px-3 py-2`}>
