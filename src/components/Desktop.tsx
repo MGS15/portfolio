@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import projects from "../assets/projects.png"
-import mail from "../assets/mail.png"
-import toolbox from "../assets/toolbox.png"
-import pdf from "../assets/pdf.png"
-import who from "../assets/who.png"
+import { useContext, useEffect, useState } from "react";
+import DesktopContext from "../config/DesktopContext";
+import { all_icons, all_windows } from "../config/init_desktop";
 import IWindow from "../types/window";
-import Window from "./Window"
+import Window from "./Window";
 
-const File = ({name, icon, isActive, onFileClick}: {name: string, icon: string, isActive: boolean, onFileClick: Function}) => {
+const Icon = ({name, icon, isActive, onIconClick, onIconDoubleClick}: {name: string, icon: string, isActive: boolean, onIconClick: Function, onIconDoubleClick: Function}) => {
 
 	const handleOneClick = (event: any) => {
 		event.stopPropagation();
-	  	onFileClick(name);
+		onIconClick(name);
 	}
   
-	const handleDoubleClick = () => {}
+	const handleDoubleClick = (event: any) => {
+		event.stopPropagation();
+		onIconDoubleClick(name);
+	}
   
 	return (
 		<div className={`w-28 h-28 flex flex-col items-center justify-center
@@ -28,64 +28,49 @@ const File = ({name, icon, isActive, onFileClick}: {name: string, icon: string, 
 			</p>
 		</div>
 	)
-  }
-
-
+}
 
 const Desktop = () => {
 	const [activeFile, setActiveFile] = useState("");
-	const window_props: IWindow = {
-		title: 'test',
-		icon: pdf,
-		isActive: true
-	}
+	const desktopContext = useContext(DesktopContext);
+	const [desktop, setDesktop] = useState<IWindow[]>(desktopContext);
 
-	useEffect(() => {
-		const handleClickOutside = () => {
-			setActiveFile("");
-		}
-		window.addEventListener('click', handleClickOutside);
-		return () => window.removeEventListener('click', handleClickOutside)
-	}, [activeFile]);
-  
 	const handleFileClick = (fileName: string) => {
-	  setActiveFile(fileName);
+		setActiveFile(fileName);
 	}
+	
+	const handleDoubleClick = (fileName: string) => {
+		const window = all_windows.find(window => window.title === fileName);
+		if (!window) return;
+		setDesktop([...desktop, window]);
+	}
+	
+		useEffect(() => {
+			const handleClickOutside = () => {
+				setActiveFile("");
+			}
+			window.addEventListener('click', handleClickOutside);
+			return () => window.removeEventListener('click', handleClickOutside)
+		}, [activeFile, desktop]);
+	  
   
 	return (
 		<div id="desktop" className={`bg-wallpaper relative bg-center bg-cover bg-no-repeat
 			flex flex-col flex-1 gap-5 overflow-hidden`}>
-			<Window window_props={window_props}  />
-			<File 
-				name={"Who am I?"} 
-				icon={who} 
-				isActive={"Who am I?" === activeFile} 
-				onFileClick={handleFileClick}
-			/>
-			<File 
-				name={"my toolbox"} 
-				icon={toolbox} 
-				isActive={"my toolbox" === activeFile} 
-				onFileClick={handleFileClick}
-			/>
-			<File 
-				name={"projects"} 
-				icon={projects} 
-				isActive={"projects" === activeFile} 
-				onFileClick={handleFileClick}
-			/>
-			<File 
-				name={"say hi!"} 
-				icon={mail} 
-				isActive={"say hi!" === activeFile} 
-				onFileClick={handleFileClick}
-			/>
-			<File 
-				name={"my resume"} 
-				icon={pdf} 
-				isActive={"my resume" === activeFile} 
-				onFileClick={handleFileClick}
-			/>
+			{
+				all_icons.map(
+					(icon, index) =>  <Icon key={index} name={icon.name} icon={icon.icon} isActive={activeFile === icon.name}
+						onIconClick={handleFileClick} onIconDoubleClick={handleDoubleClick} />
+				)
+			}
+			{
+				desktop.map((window, index) => {
+					window.isActive = index === desktop.length - 1
+					return <Window key={index} title={window.title} icon={window.icon}
+						isActive={window.isActive} windowElement={window.windowElement()} />
+				})
+			}
+			
 	  	</div>
 	)
 }
