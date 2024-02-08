@@ -1,6 +1,4 @@
-import IWindow from "../types/window";
 import Draggable from "react-draggable";
-import DefaultWindow from "./WindowContent/DefaultWindow";
 import GenericButton from "./GenericButton";
 import { useEffect, useState } from "react";
 
@@ -15,7 +13,7 @@ const setDefaultPosition = () => {
 	}
 }
 
-const Window = ({window_props}: {window_props: IWindow}) => {
+const Window = (props: {title: string, icon: string, isActive: boolean, windowElement: JSX.Element}) => {
 
 	const [isMaximized, setIsMaximized] = useState(false)
 	const [isClosed, setIsClosed] = useState(false)
@@ -40,14 +38,14 @@ const Window = ({window_props}: {window_props: IWindow}) => {
 				${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				 border-2 border-solid border-black bg-text`}>
 				<div className={`flex flex-col min-h-44 min-w-44  ${isMaximized ? "w-full h-full" : "w-fit h-fit"}
-				${window_props.isActive ? "border-2 border-t-white border-l-white border-r-black border-b-black" :
+				${props.isActive ? "border-2 border-t-white border-l-white border-r-black border-b-black" :
 				"border border-t-black border-l-black border-r-white border-b-white"}`}>
 					<div className={`drag-handle px-2 py-2 flex flex-row bg-dock gap-10
 						border-2 border-t-0 border-x-0 border-b-black items-center justify-between`}>
 						<div className={`flex flex-row justify-start gap-3`}>
-							<img src={window_props.icon} alt={window_props.title}
+							<img src={props.icon} alt={props.title}
 								className={`h-6`} />
-							<p className={`capitalize font-pixelify-sans`}>{window_props.title}</p>
+							<p className={`capitalize font-pixelify-sans`}>{props.title}</p>
 						</div>
 						<div className={`flex flex-row justify-end gap-1`}>
 							<GenericButton text={`⎼`} isPrimary={false} functionallity={testfunc} />
@@ -56,7 +54,7 @@ const Window = ({window_props}: {window_props: IWindow}) => {
 						</div>
 					</div>
 					<div className={`px-3 py-2`}>
-						<DefaultWindow />
+						{props.windowElement}
 					</div>
 				</div>
 			</div>
