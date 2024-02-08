@@ -13,10 +13,10 @@ const setDefaultPosition = () => {
 	}
 }
 
-const Window = (props: {title: string, icon: string, isActive: boolean, windowElement: JSX.Element}) => {
+const Window = (props: {title: string, icon: string, isActive: boolean, windowElement: JSX.Element, closeWindow: Function, onWindowClick: Function}) => {
 
 	const [isMaximized, setIsMaximized] = useState(false)
-	const [isClosed, setIsClosed] = useState(false)
+	const [isMinimized, setIsMinimized] = useState(false)
 	const [position, setPosition] = useState(setDefaultPosition());
 
 	useEffect(() => {
@@ -25,18 +25,15 @@ const Window = (props: {title: string, icon: string, isActive: boolean, windowEl
 		} else {
 			setPosition(setDefaultPosition())
 		}
-	}, [isMaximized, isClosed])
-
-	const testfunc = () => {
-		console.log('test')
-	}
+	}, [isMaximized])
 
 	return (
 		<Draggable bounds="#desktop" handle=".drag-handle"
 			defaultPosition={setDefaultPosition()} position={isMaximized ? position: undefined} >
-			<div className={`absolute select-none min-h-44 min-w-44
+			<div className={`${isMinimized ? "hidden" : "absolute"} select-none min-h-44 min-w-44
 				${isMaximized ? "w-full h-full" : "w-fit h-fit"}
-				 border-2 border-solid border-black bg-text`}>
+				 border-2 border-solid border-black bg-text`}
+				onClick={(event) => {event.stopPropagation(); props.onWindowClick()}} >
 				<div className={`flex flex-col min-h-44 min-w-44  ${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				${props.isActive ? "border-2 border-t-white border-l-white border-r-black border-b-black" :
 				"border border-t-black border-l-black border-r-white border-b-white"}`}>
@@ -48,9 +45,9 @@ const Window = (props: {title: string, icon: string, isActive: boolean, windowEl
 							<p className={`capitalize font-pixelify-sans`}>{props.title}</p>
 						</div>
 						<div className={`flex flex-row justify-end gap-1`}>
-							<GenericButton text={`⎼`} isPrimary={false} functionallity={testfunc} />
+							<GenericButton text={`⎼`} isPrimary={false} functionallity={() => setIsMinimized(!isMaximized)} />
 							<GenericButton text={`⚿`} isPrimary={false} functionallity={() => setIsMaximized(!isMaximized)} />
-							<GenericButton text={`X`} isPrimary={false} functionallity={() => setIsClosed(!isClosed)} />
+							<GenericButton text={`X`} isPrimary={false} functionallity={props.closeWindow} />
 						</div>
 					</div>
 					<div className={`px-3 py-2`}>

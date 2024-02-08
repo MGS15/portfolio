@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import DesktopContext from "../config/DesktopContext";
 import { all_icons, all_windows } from "../config/init_desktop";
-import IWindow from "../types/window";
 import Window from "./Window";
 
 const Icon = ({name, icon, isActive, onIconClick, onIconDoubleClick}: {name: string, icon: string, isActive: boolean, onIconClick: Function, onIconDoubleClick: Function}) => {
@@ -32,28 +31,40 @@ const Icon = ({name, icon, isActive, onIconClick, onIconDoubleClick}: {name: str
 
 const Desktop = () => {
 	const [activeFile, setActiveFile] = useState("");
-	const desktopContext = useContext(DesktopContext);
-	const [desktop, setDesktop] = useState<IWindow[]>(desktopContext);
+	const [desktopContext, setDesktopContext] = useContext(DesktopContext);
 
+	useEffect(() => {
+		const handleClickOutside = () => setActiveFile("");
+		window.addEventListener('click', handleClickOutside);
+		return () => window.removeEventListener('click', handleClickOutside)
+	}, []);
+	  
+	
 	const handleFileClick = (fileName: string) => {
 		setActiveFile(fileName);
 	}
 	
 	const handleDoubleClick = (fileName: string) => {
+		setActiveFile("");
 		const window = all_windows.find(window => window.title === fileName);
 		if (!window) return;
-		setDesktop([...desktop, window]);
+		const newWindow = { ...window, openOrder: Date.now() };
+		setDesktopContext(desktopContext.concat(newWindow));
 	}
 	
-		useEffect(() => {
-			const handleClickOutside = () => {
-				setActiveFile("");
-			}
-			window.addEventListener('click', handleClickOutside);
-			return () => window.removeEventListener('click', handleClickOutside)
-		}, [activeFile, desktop]);
-	  
-  
+	const changeActiveWindow = (fileName: string) => {
+		const newDesktop = desktopContext.map(window => {
+			return { ...window, isActive: window.title === fileName };
+		})
+		console.log("ddddd", newDesktop);
+		setDesktopContext(newDesktop);
+	}
+	
+		const closeWindow = (fileName: string) => {
+			// changeActiveWindow(fileName);
+			setDesktopContext(desktopContext.filter(window => window.title !== fileName));
+		}
+
 	return (
 		<div id="desktop" className={`bg-wallpaper relative bg-center bg-cover bg-no-repeat
 			flex flex-col flex-1 gap-5 overflow-hidden`}>
@@ -64,10 +75,13 @@ const Desktop = () => {
 				)
 			}
 			{
-				desktop.map((window, index) => {
-					window.isActive = index === desktop.length - 1
+				desktopContext.map((window, index) => {
+					window.isActive = index === desktopContext.length - 1
 					return <Window key={index} title={window.title} icon={window.icon}
-						isActive={window.isActive} windowElement={window.windowElement()} />
+							closeWindow={() => closeWindow(window.title)} 
+							onWindowClick={() => {changeActiveWindow(window.title)}}
+							isActive={window.isActive} windowElement={window.windowElement()} 
+						/>
 				})
 			}
 			

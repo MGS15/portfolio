@@ -3,6 +3,6 @@ import IWindow from "../types/window";
 
 const desktopElements: IWindow[] = []
 
-const DesktopContext = createContext(desktopElements)
+const DesktopContext = createContext<[IWindow[], any]>([desktopElements, null])
 
 export default DesktopContext;
