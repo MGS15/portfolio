@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import DesktopContext from "../config/DesktopContext";
 import { all_icons, all_windows } from "../config/init_desktop";
 import Window from "./Window";
+import IWindow from "../types/window";
 
 const Icon = ({name, icon, isActive, onIconClick, onIconDoubleClick}: {name: string, icon: string, isActive: boolean, onIconClick: Function, onIconDoubleClick: Function}) => {
 
@@ -53,10 +54,15 @@ const Desktop = () => {
 	}
 	
 	const changeActiveWindow = (fileName: string) => {
-		const newDesktop = desktopContext.map(window => {
-			return { ...window, isActive: window.title === fileName };
-		})
-		console.log("ddddd", newDesktop);
+		if (desktopContext[desktopContext.length - 1].title === fileName) return;
+		const newDesktop = desktopContext.reduce((acc, window) => {
+			if (window.title === fileName) {
+				acc.push({ ...window, isActive: false });
+			} else {
+				acc.unshift({ ...window, isActive: true });
+			}
+			return acc;
+		}, [] as IWindow[]);
 		setDesktopContext(newDesktop);
 	}
 	
