@@ -1,6 +1,6 @@
 import Draggable from "react-draggable";
 import GenericButton from "../GenericButton";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const WhoAmIBody = () => {
 	return (
@@ -11,12 +11,27 @@ const WhoAmIBody = () => {
 	);
 }
 
-const WhoAmI = (props: {title: string, icon: string, isActive: boolean, winPosition: {x: number, y: number}, closeWindow: Function, onWindowClick: Function}) => {
+const WhoAmI = (props: {title: string, icon: string, isActive: boolean, closeWindow: Function, onWindowClick: Function}) => {
+
+
+	const setDefaultPosition = () => {
+		const maxX = window.innerWidth / 2
+		const minX = window.innerWidth / 4
+		const maxY = window.innerHeight / 2
+		const minY = window.innerHeight / 10
+		console.log("setDefaultPosition")
+		return {
+			x: Math.floor(Math.random() * (maxX - minX + 1)) + minX,
+			y: Math.floor(Math.random() * (maxY - minY + 1)) + minY
+		}
+	}
+
+	const defaultPosition = useMemo(setDefaultPosition, [])
 
 	const [isMaximized, setIsMaximized] = useState(false)
 	const [isMinimized, setIsMinimized] = useState(false)
-	const [position, setPosition] = useState(props.winPosition);
-	const [latestPosition, setLatestPosition] = useState(props.winPosition);
+	const [position, setPosition] = useState(defaultPosition);
+	const [latestPosition, setLatestPosition] = useState(position);
 
 	useEffect(() => {
 		setLatestPosition(position)
@@ -26,13 +41,16 @@ const WhoAmI = (props: {title: string, icon: string, isActive: boolean, winPosit
 		if (isMaximized) {
 			setPosition({ x: 0, y: 0 })
 		} else {
-			setPosition(props.winPosition)
+			setPosition(position)
 		}
 	}, [isMaximized])
 
 	return (
 		<Draggable bounds="#desktop" handle=".drag-handle"
-			onStop={(_event, data) => setPosition({ x: data.x, y: data.y })}
+			onStop={(_event, data) => {
+				setPosition({ x: data.x, y: data.y })
+				setLatestPosition({ x: data.x, y: data.y });
+			}}
 			defaultPosition={latestPosition} position={isMaximized ? position: undefined} >
 			<div className={`${isMinimized ? "hidden" : "absolute"} select-none min-h-44 min-w-44
 				${isMaximized ? "w-full h-full" : "w-fit h-fit"}

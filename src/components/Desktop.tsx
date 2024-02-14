@@ -88,7 +88,7 @@ const Desktop = () => {
 					window.isActive = index === desktopContext.length - 1
 					const WindowElement = window.windowElement
 					return <WindowElement
-							key={index}
+							key={window.openOrder}
 							title={window.title}
 							icon={window.icon}
 							isActive={window.isActive}
