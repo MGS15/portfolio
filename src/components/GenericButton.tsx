@@ -1,4 +1,4 @@
-const GenericButton = (props: { text: string, isPrimary: boolean, functionallity: any }) => {
+const GenericButton = (props: { text: string, isPrimary: boolean, functionallity: Function }) => {
 	return (
 		<div className="border border-solid border-black bg-dock">
 			<button onClick={(event) => {event.stopPropagation(); props.functionallity()}}

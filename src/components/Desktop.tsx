@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import DesktopContext from "../config/DesktopContext";
 import { all_icons, all_windows } from "../config/init_desktop";
-import Window from "./Window";
+// import Window from "./Window";
 import IWindow from "../types/window";
 
 const Icon = ({name, icon, isActive, onIconClick, onIconDoubleClick}: {name: string, icon: string, isActive: boolean, onIconClick: Function, onIconDoubleClick: Function}) => {
@@ -49,7 +49,11 @@ const Desktop = () => {
 		setActiveFile("");
 		const window = all_windows.find(window => window.title === fileName);
 		if (!window) return;
-		const newWindow = { ...window, openOrder: Date.now() };
+		const newWindow: IWindow = {
+			...window,
+			openOrder: Date.now(),
+			windowElement: window.windowElement
+		};
 		setDesktopContext(desktopContext.concat(newWindow));
 	}
 	
@@ -67,7 +71,6 @@ const Desktop = () => {
 	}
 	
 		const closeWindow = (fileName: string) => {
-			// changeActiveWindow(fileName);
 			setDesktopContext(desktopContext.filter(window => window.title !== fileName));
 		}
 
@@ -83,11 +86,15 @@ const Desktop = () => {
 			{
 				desktopContext.map((window, index) => {
 					window.isActive = index === desktopContext.length - 1
-					return <Window key={index} title={window.title} icon={window.icon}
-							closeWindow={() => closeWindow(window.title)} 
-							onWindowClick={() => {changeActiveWindow(window.title)}}
-							isActive={window.isActive} windowElement={window.windowElement()} 
-						/>
+					const WindowElement = window.windowElement
+					return <WindowElement
+							key={index}
+							title={window.title}
+							icon={window.icon}
+							isActive={window.isActive}
+							closeWindow={() => closeWindow(window.title)}
+							onWindowClick={() => changeActiveWindow(window.title)}
+					/>
 				})
 			}
 			
