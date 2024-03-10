@@ -11,7 +11,7 @@ const WhoAmIBody = () => {
 	);
 }
 
-const WhoAmI = (props: {title: string, icon: string, isActive: boolean, closeWindow: Function, onWindowClick: Function}) => {
+const WhoAmI = (props: {title: string, icon: string, isActive: boolean, closeWindow: Function, minimizeWindow: Function, onWindowClick: Function}) => {
 
 
 	const setDefaultPosition = () => {
@@ -32,6 +32,7 @@ const WhoAmI = (props: {title: string, icon: string, isActive: boolean, closeWin
 	const [isMinimized, setIsMinimized] = useState(false)
 	const [position, setPosition] = useState(defaultPosition);
 	const [latestPosition, setLatestPosition] = useState(position);
+	const [, setIsFocused] = useState(props.isActive);
 
 	useEffect(() => {
 		setLatestPosition(position)
@@ -45,6 +46,11 @@ const WhoAmI = (props: {title: string, icon: string, isActive: boolean, closeWin
 		}
 	}, [isMaximized])
 
+	const minimizeCurrentWindow = () => {
+		props.minimizeWindow(props.title)
+		setIsMinimized(true)
+	}
+
 	return (
 		<Draggable bounds="#desktop" handle=".drag-handle"
 			onStop={(_event, data) => {
@@ -55,7 +61,7 @@ const WhoAmI = (props: {title: string, icon: string, isActive: boolean, closeWin
 			<div className={`${isMinimized ? "hidden" : "absolute"} select-none min-h-44 min-w-44
 				${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				 border-2 border-solid border-black bg-text`}
-				onClick={(event) => {event.stopPropagation(); props.onWindowClick()}} >
+				onClick={(event) => {event.stopPropagation(); setIsFocused(true); props.onWindowClick()}} >
 				<div className={`flex flex-col min-h-44 min-w-44  ${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				${props.isActive ? "border-2 border-t-white border-l-white border-r-black border-b-black" :
 				"border border-t-black border-l-black border-r-white border-b-white"}`}>
@@ -67,7 +73,7 @@ const WhoAmI = (props: {title: string, icon: string, isActive: boolean, closeWin
 							<p className={`capitalize font-pixelify-sans`}>{props.title}</p>
 						</div>
 						<div className={`flex flex-row justify-end gap-1`}>
-							<GenericButton text={`⎼`} isPrimary={false} functionallity={() => setIsMinimized(!isMaximized)} />
+							<GenericButton text={`⎼`} isPrimary={false} functionallity={() => minimizeCurrentWindow()} />
 							<GenericButton text={`⚿`} isPrimary={false} functionallity={() => setIsMaximized(!isMaximized)} />
 							<GenericButton text={`X`} isPrimary={false} functionallity={props.closeWindow} />
 						</div>

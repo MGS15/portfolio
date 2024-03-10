@@ -2,17 +2,17 @@ import { useContext, useEffect, useState } from 'react';
 import DesktopContext from '../config/DesktopContext';
 import IWindow from '../types/window';
 
-const DockElement = ({name, icon, isActive}:{name: string, icon: string, isActive: boolean}) => {
+const DockElement = (props: {name: string, icon: string, isActive: boolean}) => {
 	return (
 		<div className={`flex flex-row h-full border-solid border-black`}>
 			<div className={`flex flex-row items-center justify-start gap-3 truncate ...
 				w-14 sm:w-44 px-3 h-full border 
-				${!isActive ? "border-t-white border-l-white border-r-black border-b-black" :
+				${!props.isActive ? "border-t-white border-l-white border-r-black border-b-black" :
 				"border-t-black border-l-black border-r-white border-b-white"}`}>
-				<img src={icon} alt={name}
+				<img src={props.icon} alt={props.name}
 					className={`w-5`} />
 				<p className={`hidden sm:block truncate ...`}>
-					{name}
+					{props.name}
 				</p>
 			</div>
 		</div>

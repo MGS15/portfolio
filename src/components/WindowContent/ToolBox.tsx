@@ -10,7 +10,7 @@ const ToolBoxBody = () => {
   );
 }
 
-const ToolBox = (props: {title: string, icon: string, isActive: boolean, closeWindow: Function, onWindowClick: Function}) => {
+const ToolBox = (props: {title: string, icon: string, isActive: boolean, closeWindow: Function, minimizeWindow: Function, onWindowClick: Function}) => {
 
 
 	const setDefaultPosition = () => {
@@ -30,6 +30,7 @@ const ToolBox = (props: {title: string, icon: string, isActive: boolean, closeWi
 	const [isMinimized, setIsMinimized] = useState(false)
 	const [position, setPosition] = useState(defaultPosition);
 	const [latestPosition, setLatestPosition] = useState(position);
+	const [, setIsFocused] = useState(props.isActive);
 
 	useEffect(() => {
 		setLatestPosition(position)
@@ -53,7 +54,7 @@ const ToolBox = (props: {title: string, icon: string, isActive: boolean, closeWi
 			<div className={`${isMinimized ? "hidden" : "absolute"} select-none min-h-44 min-w-44
 				${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				 border-2 border-solid border-black bg-text`}
-				onClick={(event) => {event.stopPropagation(); props.onWindowClick()}} >
+				onClick={(event) => {event.stopPropagation(); setIsFocused(true); props.onWindowClick()}} >
 				<div className={`flex flex-col min-h-44 min-w-44  ${isMaximized ? "w-full h-full" : "w-fit h-fit"}
 				${props.isActive ? "border-2 border-t-white border-l-white border-r-black border-b-black" :
 				"border border-t-black border-l-black border-r-white border-b-white"}`}>

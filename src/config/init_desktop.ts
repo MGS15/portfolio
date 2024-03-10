@@ -35,27 +35,27 @@ all_icons.forEach(() => POSIONS.push(setDefaultPosition()))
 export const all_windows: IWindow[] = [
 	{
 		title: "who am i?", icon: who, isActive: false, openOrder: -1, windowElement: (props) => WhoAmI({
-			title: "who am i?", icon: who, isActive: props.isActive, closeWindow: props.closeWindow, onWindowClick: props.onWindowClick
+			title: "who am i?", icon: who, isActive: props.isActive, closeWindow: props.closeWindow, minimizeWindow: props.minimizeWindow, onWindowClick: props.onWindowClick
 		})
 	},
 	{
 		title: "toolbox", icon: toolbox, isActive: false, openOrder: -1, windowElement: (props) => ToolBox({
-			title: "toolbox", icon: toolbox, isActive: props.isActive, closeWindow: props.closeWindow, onWindowClick: props.onWindowClick
+			title: "toolbox", icon: toolbox, isActive: props.isActive, closeWindow: props.closeWindow, minimizeWindow: props.minimizeWindow, onWindowClick: props.onWindowClick
 		})
 	},
 	{
 		title: "projects", icon: projects, isActive: false, openOrder: -1, windowElement: (props) => Projects({
-			title: "projects", icon: projects, isActive: props.isActive, closeWindow: props.closeWindow, onWindowClick: props.onWindowClick,
+			title: "projects", icon: projects, isActive: props.isActive, closeWindow: props.closeWindow, minimizeWindow: props.minimizeWindow, onWindowClick: props.onWindowClick,
 		})
 	},
 	{
 		title: "say hi!", icon: mail, isActive: false, openOrder: -1, windowElement: (props) => SayHi({
-			title: "say hi!", icon: mail, isActive: props.isActive, closeWindow: props.closeWindow, onWindowClick: props.onWindowClick
+			title: "say hi!", icon: mail, isActive: props.isActive, closeWindow: props.closeWindow, minimizeWindow: props.minimizeWindow, onWindowClick: props.onWindowClick
 		})
 	},
 	{
 		title: "my resume", icon: pdf, isActive: false, openOrder: -1, windowElement: (props) => Resume({
-			title: "my resume", icon: pdf, isActive: false, closeWindow: props.closeWindow, onWindowClick: props.onWindowClick
+			title: "my resume", icon: pdf, isActive: false, closeWindow: props.closeWindow, minimizeWindow: props.minimizeWindow, onWindowClick: props.onWindowClick
 		})
 	},
 ]

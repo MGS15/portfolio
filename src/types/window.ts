@@ -9,6 +9,7 @@ interface IWindow {
         icon: string;
         isActive: boolean;
         closeWindow: Function;
+        minimizeWindow: Function;
         onWindowClick: Function;
     }) => JSX.Element;
 }

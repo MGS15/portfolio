@@ -70,9 +70,13 @@ const Desktop = () => {
 		setDesktopContext(newDesktop);
 	}
 	
-		const closeWindow = (fileName: string) => {
-			setDesktopContext(desktopContext.filter(window => window.title !== fileName));
-		}
+	const closeWindow = (fileName: string) => {
+		setDesktopContext(desktopContext.filter(window => window.title !== fileName));
+	}
+
+	const toggleMinimizeWindow = (fileName: string, isMinimized = false) => {
+		console.log(fileName, isMinimized);	
+	};
 
 	return (
 		<div id="desktop" className={`bg-wallpaper relative bg-center bg-cover bg-no-repeat
@@ -93,6 +97,7 @@ const Desktop = () => {
 							icon={window.icon}
 							isActive={window.isActive}
 							closeWindow={() => closeWindow(window.title)}
+							minimizeWindow={() => toggleMinimizeWindow(window.title)}
 							onWindowClick={() => changeActiveWindow(window.title)}
 					/>
 				})
