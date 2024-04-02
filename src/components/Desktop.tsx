@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import DesktopContext from "../config/DesktopContext";
 import { all_icons, all_windows } from "../config/init_desktop";
-// import Window from "./Window";
 import IWindow from "../types/window";
 
 const Icon = ({name, icon, isActive, onIconClick, onIconDoubleClick}: {name: string, icon: string, isActive: boolean, onIconClick: Function, onIconDoubleClick: Function}) => {
@@ -49,6 +48,8 @@ const Desktop = () => {
 		setActiveFile("");
 		const window = all_windows.find(window => window.title === fileName);
 		if (!window) return;
+		const isOpened = desktopContext.find(window => window.title === fileName);
+		if (isOpened) return;
 		const newWindow: IWindow = {
 			...window,
 			openOrder: Date.now(),
@@ -58,6 +59,7 @@ const Desktop = () => {
 	}
 	
 	const changeActiveWindow = (fileName: string) => {
+		console.log('----> changeActiveWindow - 1 :', desktopContext);
 		if (desktopContext[desktopContext.length - 1].title === fileName) return;
 		const newDesktop = desktopContext.reduce((acc, window) => {
 			if (window.title === fileName) {
@@ -68,6 +70,7 @@ const Desktop = () => {
 			return acc;
 		}, [] as IWindow[]);
 		setDesktopContext(newDesktop);
+		console.log('----> changeActiveWindow - 2 :', desktopContext);
 	}
 	
 	const closeWindow = (fileName: string) => {
